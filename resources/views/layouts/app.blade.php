@@ -8,12 +8,12 @@
     <title>@hasSection('title') @yield('title') | @endif {{ config('app.name') }}</title>
     <meta name="description" content="">
 
-    <link href="{{ asset('images/favicon.png') }}" rel="icon" type="image/png">
+    <link href="{{ asset('images/favicon.png', true) }}" rel="icon" type="image/png">
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css', true) }}" rel="stylesheet">
     @livewireStyles
 
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js', true) }}" defer></script>
     @livewireScripts
 </head>
 
@@ -26,7 +26,7 @@
                     <div class="flex items-center">
                         <div class="flex items-center flex-shrink-0">
                             <a href="{{ route('home') }}">
-                                <img class="w-8 h-8" src="{{ asset('images/icon-white.svg') }}" alt="Envault logo" />
+                                <img class="w-8 h-8" src="{{ asset('images/icon-white.svg', true) }}" alt="Envault logo" />
                             </a>
                         </div>
                         @can('administrate')
