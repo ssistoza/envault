@@ -3,7 +3,7 @@ FROM php:7.4-apache
 RUN apt-get update
 
 # Get latest Composer
-RUN apt-get install -y git zip unzip vim
+RUN apt-get install -y git zip unzip vim redis supervisor cron
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install PHP extensions
@@ -11,11 +11,6 @@ RUN apt-get install -y libpq-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql exif pcntl bcmath
 RUN a2enmod rewrite
-
-# Install redis
-WORKDIR /redis
-RUN apt-get install -y redis \
-    && redis-server --daemonize yes
 
 # Install redis extension
 RUN pecl install redis && docker-php-ext-enable redis
@@ -31,8 +26,11 @@ RUN chown -R www-data:www-data /var/www
 
 # Supervisor
 COPY docker/envault-log /envault-log
-RUN apt-get install -y supervisor 
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Cron Job 
+# COPY docker/laravel-cron /etc/cron.d/laravel-cron
+# RUN chmod 0644 /etc/cron.d/laravel-cron
 
 # Preparation
 # RUN php artisan key:generate  # not required env set already.

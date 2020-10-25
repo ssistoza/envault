@@ -1,7 +1,17 @@
 #! /bin/bash
 
-# Start Cron Job
-* * * * * php /var/www/artisan schedule:run 1>> /dev/null 2>&1
+# Start cron
+function start_cron_job() {
+  while [ true ]
+  do
+    php /var/www/artisan schedule:run >> /envault-log/cron.log &
+    sleep 60
+  done
+
+}
+
+start_cron_job &
+
 # Start Supervisor
 /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
 
