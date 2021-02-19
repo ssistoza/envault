@@ -1,80 +1,92 @@
 <p align="center">
-    <img src="https://github.com/envault/envault/blob/master/public/images/logo-black.png?raw=true" alt="Envault" />
+    <a href="https://envault.dev"><img src="https://user-images.githubusercontent.com/41773797/103277136-3cf26880-49c0-11eb-8e8d-a8feec4f27a2.png" alt="Envault banner" style="width: 100%; max-width: 800px;" /></a>
 </p>
 
-[Envault](https://envault.dev) is a repository for your credentials. It lets you manage and sync your entire team’s local .env variables, so you’re all kept up to date. Simply install your Envault server and you're ready to sync. 🚀
+<h1 align="center">Envault</h1>
 
-![Tests status](https://github.com/envault/envault/workflows/tests/badge.svg)
+<p align="center">
+    <a href="https://github.com/envault/envault/actions"><img alt="Tests passing" src="https://img.shields.io/badge/Tests-passing-green?style=for-the-badge&logo=github"></a>
+    <a href="https://laravel.com"><img alt="Laravel v8.x" src="https://img.shields.io/badge/Laravel-v8.x-FF2D20?style=for-the-badge&logo=laravel"></a>
+    <a href="https://laravel-livewire.com"><img alt="Livewire v2.x" src="https://img.shields.io/badge/Livewire-v2.x-FB70A9?style=for-the-badge"></a>
+    <a href="https://php.net"><img alt="PHP 8" src="https://img.shields.io/badge/PHP-8-777BB4?style=for-the-badge&logo=php"></a>
+</p>
 
-## Installation
+[Envault](https://envault.dev) is a tool to share .env secrets.
 
-The Envault server is built on [the Laravel PHP framework](https://laravel.com). This makes installation very simple. It requires a minimum PHP version of 7.4 and [Composer](https://getcomposer.org) installed.
+It lets you manage and sync your entire team’s local .env files, across all your projects, so you’re all kept up to date with the latest changes.
+
+Simply install Envault onto your own web server and you're ready to sync all your projects. 🚀
+
+[**Interested? Click here to watch a demo of the app.**](https://vimeo.com/414894566)
+
+## Requirements
+
+- PHP 7.4 or higher
+- HTTP server with PHP support (e.g.: Apache, Nginx, Caddy)
+- [Composer](https://getcomposer.org)
+- [A database](https://laravel.com/docs/master/database#introduction)
+- [A mail provider](https://laravel.com/docs/master/mail#introduction)
+
+## Setup
+
+Envault is built on [the Laravel PHP framework](https://laravel.com). This makes installation very simple.
 
 1) Clone this repository onto your server.
-2) Copy .env.example to .env. Generate a new `APP_KEY` using `php artisan key:generate`. Make sure that your `APP_URL` matches the address of your Envault server.
-3) Create a new database. For more details on the databases supported, please refer to [the Laravel documentation](https://laravel.com/docs/7.x/database#introduction). Fill out any connection details in your `.env` file, then run `php artisan migrate`.
-4) Set up outgoing mail from your Envault server. For more details on the mail drivers supported, please refer to [the Laravel documentation](https://laravel.com/docs/7.x/mail#introduction). Fill out any connection details in your `.env` file.
-5) Set up a queue worker. For more details, please refer to [the Laravel documentation](https://laravel.com/docs/7.x/queues#introduction).
-6) Set up a scheduled task to run `php artisan schedule:run` every minute. For more details, please refer to [the Laravel documentation](https://laravel.com/docs/7.x/scheduling#introduction).
-7) Create your first user account using the `php artisan make:user -o` command. It will be granted owner permissions.
-8) Visit your Envault server URL and sign in.
+2) Copy the `.env.example` to `.env`.
+3) Generate a new `APP_KEY` in your `.env` by running `php artisan key:generate` in the terminal.
+4) Ensure that the `APP_URL` in `.env` matches the address of your Envault server.
+3) Create a new database. For more details on the databases supported, please refer to [the Laravel documentation](https://laravel.com/docs/master/database#introduction). Fill out any appropriate connection details in your `.env` file.
+4) Run `php artisan migrate` to prepare your database.
+4) Configure outgoing mail from your Envault server. For more details on the mail drivers supported, please refer to [the Laravel documentation](https://laravel.com/docs/master/mail#introduction). Fill out any appropriate connection details in your `.env` file.
+5) Set up a scheduled task to run `php artisan schedule:run` every minute. For more details, please refer to [the Laravel documentation](https://laravel.com/docs/master/scheduling#introduction).
+6) Visit your Envault server URL and setup your owner account.
 
-You can find installation guides for specific platforms like [Laravel Forge](https://vimeo.com/414958726) and [Vapor](https://github.com/envault/envault/blob/master/docs/installation/vapor.md).
+We also have installation guides for specific platforms like [Laravel Forge](https://vimeo.com/414958726) and [Laravel Vapor](https://github.com/envault/envault/wiki/Installing-Envault-on-Laravel-Vapor).
 
-## Update guide
+## Update Guide
 
-After you update Envault from this repository, please run the following commands on your server. If you're using a platform like Laravel Forge, these can be added to your deploy script -
+After you update Envault from this repository, please run the following commands on your server. If you're using a platform like Laravel Forge, these can be added to your deploy script:
 
 ```
 composer install
 php artisan migrate
+php artisan view:cache
 php artisan queue:restart
-php artisan livewire:discover
-php artisan view:clear
 ```
 
 ## Documentation
 
-### The basics
+### The Basics
+- [Introduction](https://vimeo.com/414894566)
+- [Creating a new app](https://github.com/envault/envault/wiki/Creating-an-app)
+- [Creating a new variable](https://github.com/envault/envault/wiki/Creating-a-new-variable)
+- [Syncing to your local .env](https://github.com/envault/envault/wiki/Syncing-to-your-local-.env)
+- [Update a variable](https://github.com/envault/envault/wiki/Update-a-variable)
 
-[Introduction](https://vimeo.com/414894566)
+### Diving Deeper
+- [Importing variables from .env format](https://github.com/envault/envault/wiki/Importing-variables-from-.env-format)
+- [Rolling back a variable to a previous version](https://github.com/envault/envault/wiki/Rolling-back-a-variable-to-a-previous-version)
+- [Managing Slack notifications](https://github.com/envault/envault/wiki/Managing-Slack-notifications)
+- [Update an app](https://github.com/envault/envault/wiki/Update-an-app)
 
-[Creating a new app](https://github.com/envault/envault/blob/master/docs/usage/apps/create.md)
+### Users and Permissions
+- [Creating a new user](https://github.com/envault/envault/wiki/Creating-a-new-user)
+- [Managing a user's permissions](https://github.com/envault/envault/wiki/Managing-a-user's-permissions)
+- [Managing an app's collaborators](https://github.com/envault/envault/wiki/Managing-an-app's-collaborators)
+- [Updating a user's details](https://github.com/envault/envault/wiki/Updating-a-user's-details)
 
-[Creating a new variable](https://github.com/envault/envault/blob/master/docs/usage/variables/create.md)
+## Roadmap
 
-[Syncing to your local .env](https://github.com/envault/envault/blob/master/docs/usage/apps/sync.md)
+- [Multiple environments per app.](https://github.com/envault/envault/discussions/23)
+- [Webooks.](https://github.com/envault/envault/discussions/17)
+- [Granular user permissions system.](https://github.com/envault/envault/discussions/15)
+- Bidirectional syncing.
+- [Docker image.](https://github.com/envault/envault/discussions/1)
 
-[Update a variable](https://github.com/envault/envault/blob/master/docs/usage/variables/update.md)
+## Need Help?
 
-### Diving deeper
+🐞 If you spot a bug with Envault, please [submit a detailed issue](https://github.com/envault/envault/issues/new), and wait for assistance.
 
-[Importing variables from .env format](https://github.com/envault/envault/blob/master/docs/usage/variables/import.md)
+🤔 If you have a question or feature request, please [start a new discussion](https://github.com/envault/envault/discussions/new).
 
-[Rolling back a variable to a previous version](https://github.com/envault/envault/blob/master/docs/usage/variables/roll-back.md)
-
-[Managing Slack notifications](https://github.com/envault/envault/blob/master/docs/usage/apps/notifications.md)
-
-[Update an app](https://github.com/envault/envault/blob/master/docs/usage/apps/update.md)
-
-### Users and permissions
-
-[Creating a new user](https://github.com/envault/envault/blob/master/docs/usage/users/create.md)
-
-[Managing a user's permissions](https://github.com/envault/envault/blob/master/docs/usage/users/permissions.md)
-
-[Managing an app's collaborators](https://github.com/envault/envault/blob/master/docs/usage/apps/collaborators.md)
-
-[Updating a user's details](https://github.com/envault/envault/blob/master/docs/usage/users/update.md)
-
-## Support
-
-If you spot a bug with Envault, please [submit a detailed issue](https://github.com/envault/envault/issues) and a member of our team will assist you.
-
-If you would like support, please log into the [Envault Portal](https://portal.envault.dev), where you can access live chat with our team. Alternatively, you can email [support@envault.dev](mailto:support@envault.dev) and we'll get right back to you.
-
-If you discover a security vulnerability within Envault, please email Dan Harrin via [dan@envault.dev](mailto:dan@envault.dev). All security vulnerabilities will be promptly addressed.
-
-## License
-
-Please see our [End-User License Agreement](https://github.com/envault/envault/blob/master/LICENSE.md).
+🔐 If you discover a vulnerability within Envault, please review our [security policy](https://github.com/envault/envault/blob/master/SECURITY.md).

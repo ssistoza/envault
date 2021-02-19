@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Observers\VariableObserver;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Variable extends Model
 {
+    use HasFactory;
     use SoftDeletes;
 
     /**
@@ -15,6 +18,18 @@ class Variable extends Model
      * @var array
      */
     protected $appends = ['latest_version'];
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::observe(VariableObserver::class);
+    }
 
     /**
      * The attributes that aren't mass assignable.

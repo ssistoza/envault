@@ -1,5 +1,3 @@
-@section('title', 'Apps')
-
 <div>
     <header class="py-10">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,8 +17,8 @@
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <x-heroicon-s-search class="h-5 w-5 text-gray-400" />
                                 </div>
-                                <input wire:model.debounce.500ms="search"
-                                       class="form-input block w-full pl-10 sm:text-sm sm:leading-5"
+                                <input wire:model.debounce.500ms="search" type="search"
+                                       class="pl-10 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
                                        placeholder="Search..."
                                 />
                             </div>
@@ -45,7 +43,7 @@
                                                 />
                                                 <span
                                                     class="truncate"
-                                                >{{ count($app->variables) }} {{ count($app->variables) == 1 ? 'variable' : 'variables' }}</span>
+                                                >{{ count($app->variables) }} {{ Str::plural('variable', count($app->variables)) }}</span>
                                             </div>
                                         </div>
                                     </div>

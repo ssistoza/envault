@@ -21,8 +21,8 @@
             >
                 <div class="flex @if ($openRollBack) rounded-t-md @else rounded-md @endif shadow-sm">
                     <div class="relative flex-grow focus-within:z-10">
-                        <input wire:model.lazy="value" id="valueEdit{{ $variable->id }}"
-                               class="form-input font-mono block w-full rounded-none @if ($openRollBack) rounded-tl-md @else rounded-l-md @endif transition ease-in-out duration-150 sm:text-sm sm:leading-5 @error('value') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:shadow-outline-red @enderror"
+                        <input wire:model.defer="value" id="valueEdit{{ $variable->id }}" type="text"
+                               class="font-mono rounded-none @if ($openRollBack) rounded-tl-md @else rounded-l-md @endif shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 @error('value') border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500 @enderror"
                         />
                     </div>
 

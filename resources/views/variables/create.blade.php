@@ -36,6 +36,7 @@
                 </div>
             </div>
         </div>
+
         <form wire:submit.prevent="store" spellcheck="false">
             <div class="px-4 py-6 sm:px-6">
                 <x-inputs.text label="Key" name="key" placeholder="MAIL_USERNAME" font="font-mono"
@@ -46,6 +47,7 @@
                                maxWidth="max-w-lg" class="mt-6 sm:border-t sm:border-gray-200 sm:pt-5"
                 />
             </div>
+
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:justify-between">
                 <span class="flex w-full rounded-md shadow-sm sm:w-auto">
                     <button type="submit" wire:loading.class="opacity-75 cursor-wait"
@@ -56,6 +58,7 @@
                         <x-heroicon-s-check class="ml-1.5 -mr-1 h-5 w-5" />
                     </button>
                 </span>
+
                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
                     <button @click="importOpen = true" type="button"
                             class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5"
@@ -64,13 +67,13 @@
                     </button>
 
                     <div x-show.transition.opacity="importOpen"
-                         class="fixed bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center"
+                         class="fixed z-10 bottom-0 inset-x-0 px-4 pb-4 sm:inset-0 sm:flex sm:items-center sm:justify-center"
                     >
                         <div class="fixed inset-0">
                             <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
                         </div>
 
-                        <div @click.away="importOpen = false" @keydown.escape.window="importOpen = false"
+                        <div @click.away="importOpen = false" @keydown.escape.window="importOpen = false; $wire.set('import', '')"
                              class="relative z-10 bg-white rounded-lg overflow-hidden shadow-xl sm:max-w-4xl sm:w-full"
                         >
                             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -78,30 +81,46 @@
                                     <h3 class="text-lg leading-6 font-medium text-gray-900">
                                         Import Variables
                                     </h3>
+
                                     <div class="mt-3 rounded-md shadow-sm">
-                                        <textarea wire:model.lazy="import" rows="20"
+                                        <textarea wire:model.defer="import" rows="20"
                                                   placeholder="API_KEY=iRRMCOsMpNwpSWBi"
-                                                  class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 font-mono"
+                                                  class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md transition duration-150 ease-in-out sm:leading-5 font-mono"
                                         ></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
-                                    <button wire:click="import" @click="importOpen = false" type="button"
-                                            wire:loading.class="opacity-75 cursor-wait"
-                                            class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                                    >
-                                        Import
-                                    </button>
-                                </span>
+
+                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse justify-between">
+                                <div class="sm:flex sm:flex-row-reverse">
+                                    <span class="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
+                                        <button wire:click="import" @click="importOpen = false" type="button"
+                                                wire:loading.class="opacity-75 cursor-wait"
+                                                class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                                        >
+                                            Import
+                                        </button>
+                                    </span>
+
+                                    <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+                                        <button @click="importOpen = false" type="button"
+                                                wire:loading.class="opacity-75 cursor-wait"
+                                                class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </span>
+                                </div>
+
                                 <span class="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
-                                    <button @click="importOpen = false" type="button"
+                                    <button @click="$refs.importFileInput.click()" type="button"
                                             wire:loading.class="opacity-75 cursor-wait"
                                             class="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-indigo-300 focus:shadow-outline transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                                     >
-                                        Cancel
+                                        <x-heroicon-o-upload class="h-5 w-5" />
                                     </button>
+
+                                    <input x-ref="importFileInput" wire:model="importFile" type="file" class="hidden"/>
                                 </span>
                             </div>
                         </div>

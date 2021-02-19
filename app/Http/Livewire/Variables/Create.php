@@ -4,14 +4,18 @@ namespace App\Http\Livewire\Variables;
 
 use App\Models\App;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\TemporaryUploadedFile;
+use Livewire\WithFileUploads;
 
 class Create extends Component
 {
     use AuthorizesRequests;
+    use WithFileUploads;
 
     /**
      * @var \App\Models\App
@@ -29,6 +33,11 @@ class Create extends Component
     public $import = '';
 
     /**
+     * @var TemporaryUploadedFile
+     */
+    public $importFile;
+
+    /**
      * @var string
      */
     public $value = '';
@@ -44,12 +53,12 @@ class Create extends Component
 
         $totalImported = 0;
 
-        collect(explode(PHP_EOL, $this->import))->filter(function ($line) {
+        collect(preg_split('/\r\n|\n|\r/', $this->import))->filter(function ($line) {
             return Str::contains($line, '=');
         })->each(function ($line) use (&$totalImported) {
             $lineComponents = explode('=', $line, 2);
-            $key = $lineComponents[0] ?? null;
-            $value = $lineComponents[1] ?? null;
+            $key = trim($lineComponents[0] ?? '');
+            $value = trim($lineComponents[1] ?? '');
 
             $validator = Validator::make([
                 'key' => $key,
@@ -120,6 +129,23 @@ class Create extends Component
                 return $query->where('app_id', $this->app->id);
             })->whereNull('deleted_at')],
         ]);
+    }
+
+    /**
+     * @param TemporaryUploadedFile $file
+     * @return void
+     */
+    public function updatedImportFile($file)
+    {
+        $this->validateOnly('importFile', [
+            'importFile' => ['file', 'mimetypes:text/plain'],
+        ]);
+
+        $this->import = $file->get();
+
+        $file->delete();
+
+        $this->importFile = null;
     }
 
     /**
