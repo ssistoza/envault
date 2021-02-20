@@ -34,7 +34,7 @@ RUN chmod 0644 /etc/cron.d/laravel-cron
 
 # Preparation
 # RUN php artisan key:generate  # not required env set already.
-RUN php artisan migrate
+RUN php artisan migrate --force
 EXPOSE 80
 COPY docker/start.sh /
 RUN chmod +x /start.sh
