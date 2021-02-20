@@ -29,12 +29,12 @@ COPY docker/envault-log /envault-log
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Cron Job 
-# COPY docker/laravel-cron /etc/cron.d/laravel-cron
-# RUN chmod 0644 /etc/cron.d/laravel-cron
+COPY docker/laravel-cron /etc/cron.d/laravel-cron
+RUN chmod 0644 /etc/cron.d/laravel-cron
 
 # Preparation
 # RUN php artisan key:generate  # not required env set already.
-RUN php artisan migrate --force
+RUN php artisan migrate
 EXPOSE 80
 COPY docker/start.sh /
 RUN chmod +x /start.sh
