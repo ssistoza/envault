@@ -9,7 +9,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Install PHP extensions
 RUN apt-get install -y libpq-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql exif pcntl bcmath
+    && docker-php-ext-install pdo pdo_pgsql pgsql exif pcntl bcmath \
+    && docker-php-ext-enable pdo_pgsql
 RUN a2enmod rewrite
 
 # Install redis extension
