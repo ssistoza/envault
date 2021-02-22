@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Verify Environments are set.
         run: |
-          if [[ -z "${APP_NAME}" ]]; then
+          if [[ -z "${{ secrets.APP_NAME }}" ]]; then
             echo "Environments are set"
           else
             echo "Environments are not set"
